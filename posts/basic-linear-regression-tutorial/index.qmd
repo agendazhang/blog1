@@ -1,0 +1,100 @@
+---
+title: "Basic Linear Regression Tutorial Using Python"
+author: "Cheng Zhang"
+date: "2025-01-17"
+categories: [code, analysis]
+image: "image.jpg"
+---
+
+As data scientists, we are often interested in understanding the relationship between variables in our dataset. Linear regression is a fundamental statistical method that allows us to model such relationships. This tutorial will guide you step-by-step through implementing a linear regression model in Python using the Scikit-Learn library.
+
+## Understanding Linear Regression
+
+Let us first understand the theory behind linear regression. It aims to find the best-fit line through a set of data points that predicts the value of a dependent variable based on some independent variables. The simplest form, known as simple linear regression, can be expressed as:
+
+$Y = a + bX + \epsilon$
+
+Here, $Y$ is the dependent variable we are trying to predict, $X$ is the independent variable, $a$ is the intercept of the best-fit line, $b$ is the slope of the best-fit line, and $\epsilon$ is the error term.
+
+## The Scikit-Learn Library
+
+Scikit-Learn is an open-source Python library designed for data analysis and machine learning. Its simplicity and functionalities make it easy for beginners to use. In this tutorial, we will be using `LinearRegression` class to build our linear regression model.
+
+## Getting Started
+
+Before you begin, ensure you have the Scikit-Learn library installed. You can use the following command to install Scikit-Learn if you haven not done so:
+
+```bash
+pip install scikit-learn
+```
+
+Also, ensure you have the numpy and pandas libraries installed.
+
+## Step 1: Preparing the Data
+
+The first step is to prepare your data. You can create a dataframe by reading from a data source such as CSV file or database. For this tutorial, assuming that you have a dataframe already generated that contains two columns: `experience` and `salary`. You are trying to predict the salary of an employee given the years of experience in the job.
+
+```python
+import pandas as pd
+data = pd.DataFrame({
+    'Experience': [1, 2, 3, 4, 5],
+    'Salary': [1300, 2200, 3500, 3800, 4200]
+})
+```
+
+## Step 2: Splitting the Data
+
+Next, split your data into a training set and a test set. The training set will help to train our model while the test set helps to evaluate the model's performance on unseen data. Scikit-Learn’s `train_test_split` function simplifies this process. The `test_size` parameter controls the percentage of data that will be used as the test set. In the example below, 80% of the data is used as the training set and 20% as the test set.
+
+```python
+from sklearn.model_selection import train_test_split
+
+X = data[['Experience']]
+y = data['Salary']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+
+## Step 3: Building and Training the Model
+
+With your data split, you can now build and train your linear regression model. Scikit-Learn’s `LinearRegression` class allows you to do so.
+
+```python
+from sklearn.linear_model import LinearRegression
+
+# Initialize the model
+model = LinearRegression()
+
+# Fit the model to the training data
+model.fit(X_train, y_train)
+```
+
+## Step 4: Making Predictions with the Model
+
+Once your model is trained, you can use it to make predictions on the test set.
+
+```python
+predictions = model.predict(X_test)
+```
+
+## Step 5: Evaluating the Accuracy of the Model
+
+Evaluating your model's accuracy is a crucial step in understanding its performance. For linear regression, Scikit-Learn provides several metrics to analyze the accuracy of the model. In our tutorial, we will use a metric called the **Mean Squared Error (MSE)**.
+
+```python
+from sklearn.metrics import mean_squared_error
+
+mse = mean_squared_error(y_test, predictions)
+
+print(f"Mean Squared Error: {mse}")
+```
+
+MSE gives an idea of the average error squared. A smaller error indicates that the predictions made by the model are closer to the actual values, signifying better model performance.
+
+
+## Conclusion
+
+Well done! You have successfully built, trained and evaluated your first linear regression mode using the Scikit-Learn library in Python. With this basic knowledge, you can try implementing a more advanced model based on real-world data. You can also look into more functionalities that the Scikit-Learn library provides.
+
+## References
+
+1. Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Duchesnay, É. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research, 12*, 2825-2830. [Link](https://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html)
